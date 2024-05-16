@@ -1,61 +1,39 @@
 package com.example.BackendMovie.service;
 
+import com.example.BackendMovie.repository.UserRepository;
+import com.example.BackendMovie.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
-public class UsersServiceImpl implements UserDetails {
-    String ROLE_PREFIX="ROLE";
-    private Long id;
+@Service
+public class UsersServiceImpl implements UsersService {
 
-    private String name;
-
-    private String email;
-
-    private String password;
-
-    private String confirmPassword;
-    String role;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-       List<GrantedAuthority>list=new ArrayList<GrantedAuthority>();
-        list.add(new SimpleGrantedAuthority(ROLE_PREFIX+role));
-          return list;
+    public User getMovieById(Integer id) {
+        Optional<User> Optional=userRepository.findById(id);
+        User user;
 
+        if(Optional.isPresent()){
+            user=Optional.get();
+        }else {
+            throw new RuntimeException("Id not found");
         }
-
-    @Override
-    public String getPassword() {
-        return password;
+        return user;
     }
 
     @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public void saveMovies(User user) {
+        this.userRepository.save(user);
     }
 }

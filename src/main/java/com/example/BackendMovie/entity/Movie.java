@@ -1,5 +1,6 @@
 package com.example.BackendMovie.entity;
 
+import com.example.BackendMovie.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "movieDetails")
+@Table(name = "movie_watchlist")
 public class Movie {
 
     @Id
@@ -29,4 +30,8 @@ public class Movie {
 
     @NonNull
     private String image;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "_user.email")
+//    private User user;
 }

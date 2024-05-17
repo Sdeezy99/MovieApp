@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth/register/user")
+@RequestMapping("/api/v1/auth")
 public class UsersController {
     @Autowired
     private UsersServiceImpl usersService;
@@ -14,11 +14,11 @@ public class UsersController {
     @PostMapping
     public  void save(@RequestBody User user)
     {
-        usersService.saveMovies(user);
+        usersService.saveUser(user);
     }
     @GetMapping("/{id}")
     public User findOneById(@PathVariable Integer id)
     {
-        return  usersService.getMovieById(id);
+        return  usersService.getUserById(id);
     }
 }

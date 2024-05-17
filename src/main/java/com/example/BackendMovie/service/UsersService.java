@@ -3,6 +3,6 @@ package com.example.BackendMovie.service;
 import com.example.BackendMovie.user.User;
 
 public interface UsersService {
-    User getMovieById(Integer id);
-    void saveMovies(User user);
+    User getUserById(Integer id);
+    void saveUser(User user);
 }

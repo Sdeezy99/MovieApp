@@ -38,7 +38,7 @@ import java.io.IOException;
                 return;
             }
             jwt = authHeader.substring(7);
-            userEmail = jwtService.extractUsername(jwt);// todo extract the userEmail from JWT token;
+            userEmail = jwtService.extractUsername(jwt);
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);

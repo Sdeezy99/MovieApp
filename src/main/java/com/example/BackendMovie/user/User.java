@@ -10,12 +10,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
-    @Data
+@Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
@@ -31,8 +29,8 @@ import java.util.List;
         private String email;
         private String password;
 
-//        @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//        private List<Movie> listAuthorities = new ArrayList<>();
+        @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+        private Set<Movie> movies = new HashSet<>();
 
         @Enumerated(EnumType.STRING)
         private Role role;

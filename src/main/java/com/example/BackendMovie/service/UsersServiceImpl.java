@@ -20,7 +20,7 @@ public class UsersServiceImpl implements UsersService {
     private UserRepository userRepository;
 
     @Override
-    public User getMovieById(Integer id) {
+    public User getUserById(Integer id) {
         Optional<User> Optional=userRepository.findById(id);
         User user;
 
@@ -33,7 +33,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void saveMovies(User user) {
+    public void saveUser(User user) {
         this.userRepository.save(user);
     }
 }

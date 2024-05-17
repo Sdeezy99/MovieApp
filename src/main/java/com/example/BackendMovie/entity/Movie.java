@@ -12,6 +12,8 @@ import lombok.Setter;
 @Table(name = "movie_watchlist")
 public class Movie {
 
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +33,14 @@ public class Movie {
     @NonNull
     private String image;
 
+    @ManyToOne
+     @JoinColumn(name = "user_id")
+     private User user;
+//    private User addedBy;
+
+
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "_user.email")
 //    private User user;
+
 }

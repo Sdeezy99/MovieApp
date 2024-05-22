@@ -36,7 +36,7 @@ public class Movie {
     @ManyToOne
      @JoinColumn(name = "user_id")
      private User user;
-//    private User addedBy;
+
 
 
 //    @ManyToOne(fetch = FetchType.LAZY)

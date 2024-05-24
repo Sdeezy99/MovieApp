@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
     @NoArgsConstructor
     public class AuthenticationResponse {
 
+        //declaring the token that will be generated when you login
         private String token;
 
     }

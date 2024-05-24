@@ -1,6 +1,7 @@
 package com.example.BackendMovie.entity;
 
 import com.example.BackendMovie.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -14,6 +15,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "id")
     private Long id;
 
     @NonNull
@@ -23,15 +25,15 @@ public class Movie {
     private String description;
 
     @NonNull
-    private String date;
-
-    @NonNull
     private String rating;
 
     @NonNull
     private String image;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "_user.email")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
 }

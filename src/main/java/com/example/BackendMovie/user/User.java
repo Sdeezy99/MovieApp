@@ -1,38 +1,44 @@
 package com.example.BackendMovie.user;
 
 import com.example.BackendMovie.entity.Movie;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
-    @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     @Entity
+    @Getter
+    @Setter
+    //naming our table
     @Table(name = "_user")
+    //userDetails is a build in method
     public class User implements UserDetails {
 
         @Id
+        //it auto generates user id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        //@Column(name = "id")
         private Long id;
 
         private String firstname;
         private String email;
         private String password;
 
-//        @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//        private List<Movie> listAuthorities = new ArrayList<>();
+
+
+        @JsonIgnore
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+        private Set<Movie> movies;
 
         @Enumerated(EnumType.STRING)
         private Role role;
@@ -42,6 +48,7 @@ import java.util.List;
             return List.of(new SimpleGrantedAuthority(role.name()));
         }
 
+//getters and setters od userDetails
         @Override
         public String getPassword() {
             return password;

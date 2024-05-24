@@ -30,18 +30,21 @@ import java.util.function.Function;
 
         public String generateToken(UserDetails userDetails) {
             return generateToken(new HashMap<>(), userDetails);
+
         }
 
         public String generateToken(
                 Map<String, Object> extraClaims,
                 UserDetails userDetails
+
         ) {
             return Jwts
                     .builder()
                     .setClaims(extraClaims)
                     .setSubject(userDetails.getUsername())
+                   // .setSubject(userDetails)
                     .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+                    .setExpiration(new Date(System.currentTimeMillis() + 30000))
                     .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                     .compact();
         }
@@ -56,6 +59,7 @@ import java.util.function.Function;
         }
 
         private Date extractExpiration(String token) {
+
             return extractClaim(token, Claims::getExpiration);
         }
 

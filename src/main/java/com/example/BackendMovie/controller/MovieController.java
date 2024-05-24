@@ -19,15 +19,19 @@ public class MovieController {
     {
         return  movieService.getAllMovies();
     }
+
+
     @PostMapping
     public  void save(@RequestBody Movie movie)
     {
 
         movieService.saveMovies(movie);
     }
+
     @GetMapping("/{id}")
     public  Movie findOneById(@PathVariable Long id)
     {
+
         return  movieService.getMovieById(id);
     }
     @PutMapping("/{id}")

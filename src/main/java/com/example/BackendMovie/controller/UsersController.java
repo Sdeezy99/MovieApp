@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth/register/user")
+@CrossOrigin("**")
 public class UsersController {
     @Autowired
     private UsersServiceImpl usersService;
@@ -16,9 +17,12 @@ public class UsersController {
     {
         usersService.saveMovies(user);
     }
-    @GetMapping("/{id}")
-    public User findOneById(@PathVariable Integer id)
-    {
-        return  usersService.getMovieById(id);
-    }
+
+
+
+//    @GetMapping("/{id}")
+//    public User findOneById(@PathVariable Long id)
+//    {
+//        return  usersService.getUserById(id);
+//    }
 }

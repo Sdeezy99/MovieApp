@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
+@Component//Marks the class as a Spring-managed component
     @RequiredArgsConstructor
     public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -24,6 +24,7 @@ import java.io.IOException;
         private final UserDetailsService userDetailsService;
 
         @Override
+        //method for filtering each http request
         protected void doFilterInternal(
                 @NonNull HttpServletRequest request,
                 @NonNull HttpServletResponse response,
@@ -32,7 +33,7 @@ import java.io.IOException;
             final String authHeader = request.getHeader("Authorisation");
             final String jwt;
             final String userEmail;
-
+//Checks if the header is present and starts with "Bearer ".it extracts the JWT token by removing the "Bearer " prefix.
             if(authHeader == null || !authHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response);
                 return;
@@ -40,9 +41,10 @@ import java.io.IOException;
             jwt = authHeader.substring(7);
             userEmail = jwtService.extractUsername(jwt);// todo extract the userEmail from JWT token;
 
+            //checks if the userEmail is not null and if there is no existing authentication
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);//Loads the user details using the UserDetailsService.
+                if (jwtService.isTokenValid(jwt, userDetails)) {//Validates the JWT token against the user details.
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
@@ -57,4 +59,5 @@ import java.io.IOException;
             filterChain.doFilter(request, response);
         }
     }
+    //purpose: class is a custom filter that processes incoming HTTP requests to authenticate users based on a JWT (JSON Web Token).
 

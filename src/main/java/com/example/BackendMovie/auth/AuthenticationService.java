@@ -16,34 +16,35 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
 
-        private final UserRepository repository;
-        private final PasswordEncoder passwordEncoder;
-        private final JwtService jwtService;
-        private final AuthenticationManager authenticationManager;
+        private final UserRepository repository;// For database operations
+        private final PasswordEncoder passwordEncoder;// For encoding passwords.
+        private final JwtService jwtService;// For generating JWT tokens.
+        private final AuthenticationManager authenticationManager;//For managing authentication processes
 
         public AuthenticationResponse register(RegisterRequest request) {
             var user = User.builder()
                     .id(request.getUserid())
                     .firstname(request.getFirstname())
                     .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.USER)
+                    .password(passwordEncoder.encode(request.getPassword()))//Encodes the user's password
+                    .role(Role.USER)//Sets the user's role to USER
                     .build();
-            repository.save(user);
-            var jwtToken = jwtService.generateToken(user);
+            repository.save(user);//Saves the user to the database using UserRepository
+            var jwtToken = jwtService.generateToken(user);//Generates a JWT token for the newly registered user using JwtService.
             return AuthenticationResponse.builder()
-                    .token(jwtToken)
+                    .token(jwtToken)//returns a response containing the jwt token
                     .build();
         }
 
         public AuthenticationResponse authenticate(AuthenticationRequest request) {
-            authenticationManager.authenticate(
+            authenticationManager.authenticate(//Authenticates the user credentials using AuthenticationManager.
                     new UsernamePasswordAuthenticationToken(
 
                             request.getEmail(),
                             request.getPassword()
                     )
             );
+            //Retrieves the user from the database using the email provided in the AuthenticationRequest.
             var user = repository.findByEmail(request.getEmail())
                     .orElseThrow();
             var jwtToken = jwtService.generateToken(user);

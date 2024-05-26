@@ -24,7 +24,6 @@ public class MovieController {
     @PostMapping
     public  void save(@RequestBody Movie movie)
     {
-
         movieService.saveMovies(movie);
     }
 

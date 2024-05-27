@@ -63,12 +63,20 @@ public class AuthenticationService {
 //                    .build();
         }
 
-//    public AuthenticationResponse updateUserById(Long id) {
-//        var user = repository.deleteById(id);
-//        var jwtToken = jwtService.generateToken(user);
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
-//    }
-    }
+
+    public User updateUser(Long id, User updatedUser) {
+        // Check if the user with the given ID exists
+        User existingUser = repository.findById(id).orElse(null);
+        if (existingUser != null) {
+            // Update the existing user with the new information
+            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setFirstname(updatedUser.getFirstname());
+            existingUser.setEmail(updatedUser.getEmail());
+            // Add other fields to update as needed
+
+            // Save the updated user
+            return repository.save(existingUser);
+        }
+        return null; // Return
+    }}
 

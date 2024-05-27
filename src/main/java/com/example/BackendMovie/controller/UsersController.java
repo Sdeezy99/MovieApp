@@ -18,11 +18,4 @@ public class UsersController {
         usersService.saveMovies(user);
     }
 
-
-
-//    @GetMapping("/{id}")
-//    public User findOneById(@PathVariable Long id)
-//    {
-//        return  usersService.getUserById(id);
-//    }
 }

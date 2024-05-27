@@ -1,5 +1,7 @@
 package com.example.BackendMovie.auth;
 
+import com.example.BackendMovie.entity.Movie;
+import com.example.BackendMovie.repository.UserRepository;
 import com.example.BackendMovie.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +41,19 @@ import org.springframework.web.bind.annotation.*;
             return ResponseEntity.ok(service.findById(id));
         }
 
-        @PutMapping("/{id}")
-        public ResponseEntity<AuthenticationResponse> update(
-                @RequestBody AuthenticationRequest request
-        ) {
-            //returns the status of the request(e.g ok means it was successful)
-            return ResponseEntity.ok(service.authenticate(request));
-        }
 
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(
+            @PathVariable Long id, @RequestBody User updatedUser) {
+        // Assuming you have a service that handles user updates
+        User user=service.updateUser(id,updatedUser);
+
+        if (user != null) {
+            return ResponseEntity.ok(user); // Return updated user if successful
+        } else {
+            return ResponseEntity.notFound().build(); // Return 404 if user not found
+        }
+    }
 }
 
 

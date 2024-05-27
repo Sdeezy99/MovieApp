@@ -48,6 +48,15 @@ import java.util.function.Function;
                     .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                     .compact();
         }
+        public String generateTokenWithId(UserDetails userDetails, Long id){
+              Map<String,Object> claims=new HashMap<>();
+              claims.put("id",id);
+              return  generateToken(claims,userDetails);
+        }
+        public Long getUserIdFromToken(String token){
+                    Claims claims=extractAllClaims(token);
+                    return claims.get("id",Long.class);
+        }
 
         public boolean isTokenValid(String token, UserDetails userDetails) {
             final String username = extractUsername(token);

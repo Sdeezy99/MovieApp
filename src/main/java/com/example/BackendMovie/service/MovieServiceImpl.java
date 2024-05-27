@@ -2,6 +2,8 @@ package com.example.BackendMovie.service;
 
 import com.example.BackendMovie.entity.Movie;
 import com.example.BackendMovie.repository.MovieRepository;
+import com.example.BackendMovie.repository.UserRepository;
+import com.example.BackendMovie.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
+    private UserRepository userRepository;
 
     @Override
     public List<Movie> getAllMovies() {
@@ -40,6 +43,10 @@ public class MovieServiceImpl implements MovieService {
         }
         return movie;
     }
+    @Override
+    public Optional<Movie> getMoviesByUserId(Long id) {
+        return movieRepository.findById(id);
+    }
 
     @Override
     public void DeleteMovie(Long id) {
@@ -47,8 +54,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void saveMovies(Movie movie) {
+    public void saveMovies(Movie movie, Long id) {
+
         this.movieRepository.save(movie);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+
+
     }
 
 }

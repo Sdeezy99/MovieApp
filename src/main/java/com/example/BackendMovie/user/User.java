@@ -38,6 +38,7 @@ import java.util.Set;
 
         @JsonIgnore
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+       // @JoinColumn(name = "user_id", referencedColumnName = "id")
         private Set<Movie> movies;
 
         @Enumerated(EnumType.STRING)

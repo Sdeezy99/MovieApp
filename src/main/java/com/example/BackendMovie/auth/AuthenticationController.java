@@ -38,6 +38,15 @@ import org.springframework.web.bind.annotation.*;
         ) {
             return ResponseEntity.ok(service.findById(id));
         }
+
+        @PutMapping("/{id}")
+        public ResponseEntity<AuthenticationResponse> update(
+                @RequestBody AuthenticationRequest request
+        ) {
+            //returns the status of the request(e.g ok means it was successful)
+            return ResponseEntity.ok(service.authenticate(request));
+        }
+
 }
 
 

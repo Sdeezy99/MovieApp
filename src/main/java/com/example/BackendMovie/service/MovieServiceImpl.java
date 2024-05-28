@@ -44,8 +44,8 @@ public class MovieServiceImpl implements MovieService {
         return movie;
     }
     @Override
-    public Optional<Movie> getMoviesByUserId(Long id) {
-        return movieRepository.findById(id);
+    public List<Movie> getMoviesByUserId(Long id) {
+        return movieRepository.findByUserId(id);
     }
 
     @Override

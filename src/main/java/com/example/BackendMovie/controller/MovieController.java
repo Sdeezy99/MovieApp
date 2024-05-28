@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/auth/movie")
@@ -17,6 +16,7 @@ import java.util.Optional;
 public class MovieController {
     @Autowired
     private MovieServiceImpl movieService;
+    @Autowired
     private UserRepository userRepository;
 
     @GetMapping
@@ -26,8 +26,8 @@ public class MovieController {
     }
 
 
-    @PostMapping
-    public  void save(@RequestBody Movie movie, @RequestParam Long id)
+    @PostMapping("/{id}")
+    public  void save(@RequestBody Movie movie,  @PathVariable Long id)
     {
         movieService.saveMovies(movie,id);
         User user=userRepository.findById(id).orElseThrow(()->new EntityNotFoundException("user not found"));
@@ -40,7 +40,7 @@ public class MovieController {
         return  movieService.getMovieById(id);
     }
     @GetMapping("/user/{id}")
-    public Optional<Movie> getMoviesByUserId(@PathVariable Long id){
+    public List<Movie> getMoviesByUserId(@PathVariable Long id){
         return movieService.getMoviesByUserId(id);
     }
 

@@ -28,6 +28,7 @@ public class Movie {
     private String rating;
 
     @NonNull
+    @Column(length = 2000)
     private String image;
 
     @ManyToOne

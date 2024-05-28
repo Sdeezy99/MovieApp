@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie,Long> {
     List<Movie> findByUserId(Long id);
+    List<Movie>deleteMoviesByUserId(Long id);
 
 }

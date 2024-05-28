@@ -20,38 +20,35 @@ public class MovieController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<Movie> findAll()
-    {
-        return  movieService.getAllMovies();
+    public List<Movie> findAll() {
+        return movieService.getAllMovies();
     }
 
 
     @PostMapping("/{id}")
-    public  void save(@RequestBody Movie movie,  @PathVariable Long id)
-    {
-        movieService.saveMovies(movie,id);
-        User user=userRepository.findById(id).orElseThrow(()->new EntityNotFoundException("user not found"));
+    public void save(@RequestBody Movie movie, @PathVariable Long id) {
+        movieService.saveMovies(movie, id);
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("user not found"));
     }
 
     @GetMapping("/{id}")
-    public  Movie findOneById(@PathVariable Long id)
-    {
+    public Movie findOneById(@PathVariable Long id) {
 
-        return  movieService.getMovieById(id);
+        return movieService.getMovieById(id);
     }
+
     @GetMapping("/user/{id}")
-    public List<Movie> getMoviesByUserId(@PathVariable Long id){
+    public List<Movie> getMoviesByUserId(@PathVariable Long id) {
         return movieService.getMoviesByUserId(id);
     }
 
     @PutMapping("/{id}")
-    public void updateM(@PathVariable Long id,@RequestBody Movie movie)
-    {
-        this.movieService.updateMovies(id,movie);
+    public void updateM(@PathVariable Long id, @RequestBody Movie movie) {
+        this.movieService.updateMovies(id, movie);
     }
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id)
-    {
+
+    @DeleteMapping("/movie/{id}")
+    public void delete(@PathVariable Long id) {
         this.movieService.DeleteMovie(id);
     }
 

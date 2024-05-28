@@ -4,6 +4,7 @@ import com.example.BackendMovie.entity.Movie;
 import com.example.BackendMovie.repository.MovieRepository;
 import com.example.BackendMovie.repository.UserRepository;
 import com.example.BackendMovie.user.User;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,16 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> getMoviesByUserId(Long id) {
         return movieRepository.findByUserId(id);
+    }
+
+    @Override
+    public void deleteMoviesByUserId(Long id, Long movieId) {
+        User user=userRepository.findById(id).orElseThrow(()->new EntityNotFoundException("User not found"));
+        List<Movie>userMovies= (List<Movie>) user.getMovies();
+        userMovies.removeIf(movie -> movie.getId().equals(movieId));
+        userRepository.save(user);
+        //return this.movieRepository.deleteMoviesByUserId(id);
+
     }
 
     @Override

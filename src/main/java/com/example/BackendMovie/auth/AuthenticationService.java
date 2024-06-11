@@ -22,6 +22,12 @@ public class AuthenticationService {
         private final AuthenticationManager authenticationManager;
 
         public AuthenticationResponse register(RegisterRequest request) {
+
+            repository.findByEmail(request.getEmail()) // <--- Added this block
+                    .ifPresent(user -> { // <--- Added this block
+                        throw new IllegalArgumentException("User with email " + request.getEmail() + " already exists"); // <--- Added this block
+                    }); // <--- Added this block
+
             var user = User.builder()
                     .firstname(request.getFirstname())
                     .email(request.getEmail())

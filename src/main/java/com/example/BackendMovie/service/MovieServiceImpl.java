@@ -71,6 +71,18 @@ public class MovieServiceImpl implements MovieService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
 
+        // Check if the movie already exists in the user's watchlist
+        boolean movieExists = user.getMovies().stream()
+                .anyMatch(m -> m.getTitle().equals(movie.getTitle()));
+
+        if (movieExists) {
+            throw new IllegalArgumentException("Movie already exists in the user's watchlist");
+        }
+
+        movieRepository.save(movie);
+        user.getMovies().add(movie);
+        userRepository.save(user);
+
 
     }
 

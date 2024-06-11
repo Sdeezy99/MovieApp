@@ -22,13 +22,14 @@ public class Movie {
     private String title;
 
     @NonNull
+    @Column(length = 1000)
     private String description;
 
     @NonNull
     private String rating;
 
     @NonNull
-    @Column(length = 2000)
+    @Column(length = 500)
     private String image;
 
     @ManyToOne
